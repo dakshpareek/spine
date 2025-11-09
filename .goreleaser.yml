@@ -1,0 +1,41 @@
+project_name: ctx
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: ctx
+    main: ./main.go
+    binary: ctx
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+
+archives:
+  - format: tar.gz
+    builds:
+      - ctx
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE*
+      - README.md
+      - docs/**
+
+checksum:
+  name_template: "{{ .ProjectName }}_checksums.txt"
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'

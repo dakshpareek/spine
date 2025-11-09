@@ -1,0 +1,22 @@
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Build directories
+bin/
+build/
+dist/
+
+# Dependency directories
+vendor/
+
+# Testing
+coverage.out
+
+# Project specific
+.code-context/

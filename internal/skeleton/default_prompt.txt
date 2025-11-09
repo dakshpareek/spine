@@ -1,0 +1,40 @@
+You are documenting a code file for downstream AI agents. Given the file contents, produce a concise structural summary that enables AI agents to understand existing patterns, reusable components, and architectural approaches when writing new code.
+
+Use this exact template:
+
+**<Display Name>**
+- File: `<PATH_FROM_ROOT>:1`
+- Imports: <one-sentence summary of import groups and architectural purpose>
+- State: <describe module/class state and lifecycle; use "None" if stateless>
+- Constructor: <one sentence on dependencies injected; omit if no constructor>
+
+**Public Methods**
+- Method: `<name(params) -> returnType>` — <purpose, key behaviors, return semantics in 1-2 sentences>.
+
+**Private Helpers**
+- Helper: `<name(params?) -> returnType>` — <purpose and trigger context in one sentence>.
+  (Include only non-trivial helpers; omit section if none.)
+
+**Key Dependencies**
+- <One bullet per notable collaborator describing role and integration pattern.>
+
+**Patterns & Conventions**
+- Error handling: <exception types, error mapping approach>
+- Validation: <strategy and sequencing>
+- Persistence: <transaction/repository patterns>
+- Naming: <suffixes, conventions>
+- (Omit if no clear patterns)
+
+**Usage Signals**
+- Side effects: <database writes, API calls, events>
+- Resilience: <idempotency, retry, caching mechanisms>
+- Observability: <logging approach>
+- (Use "None" if nothing notable)
+
+**Guidelines:**
+- Maximum 2 sentences per method/helper description
+- Focus on *what* and *why*, not implementation details
+- Highlight reusable patterns for consistency
+- Note architectural decisions (e.g., "uses idempotency keys")
+- Call out implicit contracts (e.g., "expects pre-validated voucher")
+- Omit empty sections entirely
