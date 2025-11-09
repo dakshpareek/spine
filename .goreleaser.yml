@@ -1,13 +1,13 @@
-project_name: ctx
+project_name: spine
 
 before:
   hooks:
     - go mod tidy
 
 builds:
-  - id: ctx
+  - id: spine
     main: ./main.go
-    binary: ctx
+    binary: spine
     goos:
       - darwin
       - linux
@@ -21,7 +21,7 @@ builds:
 archives:
   - format: tar.gz
     builds:
-      - ctx
+      - spine
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     files:
       - LICENSE*
