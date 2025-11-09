@@ -56,7 +56,7 @@ func runSync(opts syncOptions) error {
 
 	configPath := filepath.Join(ctxDir, configFileName)
 	if !fs.Exists(configPath) {
-		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing config.json. Run 'ctx rebuild --confirm' to restore")}
+		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing config.json. Run 'spine rebuild --confirm' to restore")}
 	}
 	cfg, err := config.LoadConfig(configPath)
 	if err != nil {
@@ -65,7 +65,7 @@ func runSync(opts syncOptions) error {
 
 	indexPath := filepath.Join(ctxDir, indexFileName)
 	if !fs.Exists(indexPath) {
-		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing index.json. Run 'ctx rebuild --confirm' to restore")}
+		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing index.json. Run 'spine rebuild --confirm' to restore")}
 	}
 	idx, err := index.LoadIndex(indexPath)
 	if err != nil {

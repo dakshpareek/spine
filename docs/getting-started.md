@@ -19,7 +19,7 @@ This places the `ctx` binary in your `$GOBIN` (`$GOPATH/bin` by default).
 
 ```bash
 cd /path/to/project
-ctx init
+spine init
 ```
 
 The command:
@@ -31,7 +31,7 @@ The command:
 ## Sync Daily Changes
 
 ```bash
-ctx sync
+spine sync
 ```
 
 `ctx` compares tracked files with your working tree:
@@ -43,7 +43,7 @@ ctx sync
 ## Generate Skeleton Prompts
 
 ```bash
-ctx generate --filter stale,missing --output prompt.md
+spine generate --filter stale,missing --output prompt.md
 ```
 
 Share `prompt.md` with your AI assistant. It contains:
@@ -62,7 +62,7 @@ After the AI writes skeletons:
 ## Verify Status
 
 ```bash
-ctx status --verbose
+spine status --verbose
 ```
 
 You’ll see a summary plus detailed lists of `stale`, `missing`, and `pendingGeneration` files.

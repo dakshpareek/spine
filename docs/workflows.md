@@ -5,9 +5,9 @@
 ## Daily Maintenance
 
 ```bash
-ctx pipeline --output prompt.md
+spine pipeline --output prompt.md
 # Feed prompt.md to your AI assistant and update skeletons
-ctx status
+spine status
 ```
 
 1. `spine sync` identifies changed files.
@@ -17,8 +17,8 @@ ctx status
 ## After Large Refactors
 
 ```bash
-ctx sync --full
-ctx generate --output refactor-prompts.md
+spine sync --full
+spine generate --output refactor-prompts.md
 ```
 
 - The `--full` flag ignores Git history and walks the entire tree.
@@ -40,7 +40,7 @@ If `.spine/` gets out of sync with reality:
 
 ```bash
 ctx rebuild --confirm
-ctx generate --output fresh-prompts.md
+spine generate --output fresh-prompts.md
 ```
 
 - `spine rebuild` wipes skeletons and rebuilds the index.

@@ -218,7 +218,7 @@ func buildPromptOutput(paths []string, idx *types.Index, promptTemplate, cwd str
 	builder.WriteString("**Index Path:** .spine/index.json\n\n")
 
 	builder.WriteString("## Verification\n\n")
-	builder.WriteString("After completion, run `ctx status` to verify that all files are marked current.\n")
+	builder.WriteString("After completion, run `spine status` to verify that all files are marked current.\n")
 
 	return builder.String(), nil
 }

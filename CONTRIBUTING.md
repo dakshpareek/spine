@@ -15,7 +15,7 @@ Thanks for your interest in improving `ctx`! This document explains how to get s
 
 1. Create a feature branch off `main`.
 2. Run `go test ./... -cover` before opening a pull request.
-3. Use `ctx validate --fix --strict` to confirm index integrity if you touch the `.spine/` workflow.
+3. Use `spine validate --fix --strict` to confirm index integrity if you touch the `.spine/` workflow.
 
 ## Coding Guidelines
 
@@ -43,7 +43,7 @@ Thanks for your interest in improving `ctx`! This document explains how to get s
 
 Open a GitHub issue with reproduction steps, or start a discussion thread. Be sure to include:
 
-- `ctx` version (`ctx --version`)
+- `ctx` version (`spine --version`)
 - Go version (`go version`)
 - Operating system
 - Command output and relevant index snippets

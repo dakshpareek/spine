@@ -13,7 +13,7 @@ func newPipelineCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "pipeline",
 		Short: "Run sync and generate in one step",
-		Long: `ctx pipeline performs a sync to detect changes and immediately builds the
+		Long: `spine pipeline performs a sync to detect changes and immediately builds the
 generate prompt, reducing the manual steps in the daily workflow.`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := runSync(syncOpts); err != nil {
