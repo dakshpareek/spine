@@ -31,7 +31,7 @@ func TestStatusVerboseOutput(t *testing.T) {
 		Status: types.StatusPendingGeneration,
 	}
 	idx.LastSync = time.Now().Add(-2 * time.Hour)
-	if err := indexpkg.SaveIndex(idx, filepath.Join(dir, ".code-context", "index.json")); err != nil {
+	if err := indexpkg.SaveIndex(idx, filepath.Join(dir, ".spine", "index.json")); err != nil {
 		t.Fatalf("save index: %v", err)
 	}
 
@@ -97,7 +97,7 @@ func TestRunStatusErrors(t *testing.T) {
 		t.Fatalf("expected error when not initialized")
 	}
 
-	// Create .code-context but no index to trigger missing index path.
+	// Create .spine but no index to trigger missing index path.
 	if err := os.MkdirAll(filepath.Join(dir, ctxDirName), 0o755); err != nil {
 		t.Fatalf("mkdir: %v", err)
 	}

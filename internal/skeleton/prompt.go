@@ -12,7 +12,7 @@ import (
 import _ "embed"
 
 const (
-	// PromptFileName is the filename used within .code-context for the prompt template.
+	// PromptFileName is the filename used within .spine for the prompt template.
 	PromptFileName = "skeleton-prompt.txt"
 )
 
@@ -26,11 +26,11 @@ func DefaultPrompt() string {
 
 // LoadPromptTemplate loads the skeleton prompt template, allowing user overrides.
 // Preference order:
-//  1. Config-specific override at <RootPath>/.code-context/skeleton-prompt.txt
-//  2. Workspace default at .code-context/skeleton-prompt.txt
+//  1. Config-specific override at <RootPath>/.spine/skeleton-prompt.txt
+//  2. Workspace default at .spine/skeleton-prompt.txt
 //  3. Embedded default prompt
 func LoadPromptTemplate(cfg types.Config) (string, error) {
-	baseDir := filepath.Dir(DirRoot) // .code-context
+	baseDir := filepath.Dir(DirRoot) // .spine
 
 	candidates := []string{
 		filepath.Clean(filepath.Join(baseDir, PromptFileName)),

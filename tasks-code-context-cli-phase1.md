@@ -25,7 +25,7 @@
 - `internal/types/types.go` - Shared type definitions (FileEntry, Index, Status enum)
 - `internal/fs/fs.go` - File system utilities (create directories, write files safely)
 - `internal/display/display.go` - Output formatting and colored terminal display
-- `.code-context/skeleton-prompt.txt` - Embedded default skeleton prompt
+- `.spine/skeleton-prompt.txt` - Embedded default skeleton prompt
 - `go.mod` - Go module dependencies
 - `go.sum` - Dependency checksums
 - `README.md` - User documentation
@@ -86,9 +86,9 @@
 
 - [x] 4.0 Command Implementations (init, sync, status, validate, clean, rebuild)
   - [x] 4.1 Create `cmd/init.go` implementing `ctx init` command
-  - [x] 4.2 In init: Check if `.code-context/` exists, error if already initialized
-  - [x] 4.3 In init: Create `.code-context/`, `skeletons/`, write default `config.json` and `skeleton-prompt.txt`
-  - [x] 4.4 In init: Add `.code-context/` to `.gitignore` (create if missing)
+  - [x] 4.2 In init: Check if `.spine/` exists, error if already initialized
+  - [x] 4.3 In init: Create `.spine/`, `skeletons/`, write default `config.json` and `skeleton-prompt.txt`
+  - [x] 4.4 In init: Add `.spine/` to `.gitignore` (create if missing)
   - [x] 4.5 In init: Run initial scan and create `index.json` with all files marked as "missing"
   - [x] 4.6 In init: Display success message with next steps as per PRD
   - [x] 4.7 Create `cmd/sync.go` implementing `spine sync` command
@@ -108,7 +108,7 @@
   - [x] 4.21 In validate: Add `--fix` flag to auto-mark mismatched files as stale
   - [x] 4.22 In validate: Add `--strict` flag to exit with error code if issues found
   - [x] 4.23 Create `cmd/clean.go` implementing `ctx clean` command
-  - [x] 4.24 In clean: Scan `.code-context/skeletons/` and remove orphaned files not in index
+  - [x] 4.24 In clean: Scan `.spine/skeletons/` and remove orphaned files not in index
   - [x] 4.25 In clean: Remove empty directories after cleanup
   - [x] 4.26 Create `cmd/rebuild.go` implementing `ctx rebuild` command
   - [x] 4.27 In rebuild: Require `--confirm` flag to proceed (prevent accidental data loss)

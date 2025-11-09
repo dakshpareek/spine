@@ -49,7 +49,7 @@ func TestValidateStatusExportCleanRebuild(t *testing.T) {
 		t.Fatalf("expected export to contain skeleton content")
 	}
 
-	orphan := filepath.Join(dir, ".code-context", "skeletons", "orphan.txt")
+	orphan := filepath.Join(dir, ".spine", "skeletons", "orphan.txt")
 	if err := os.WriteFile(orphan, []byte("orphan"), 0o644); err != nil {
 		t.Fatalf("write orphan: %v", err)
 	}

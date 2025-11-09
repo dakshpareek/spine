@@ -39,7 +39,7 @@ func TestUpdateAndRemoveFileEntry(t *testing.T) {
 	entry := types.FileEntry{
 		Hash:         "abc123",
 		SkeletonHash: "def456",
-		SkeletonPath: ".code-context/skeletons/src/example.skeleton.ts",
+		SkeletonPath: ".spine/skeletons/src/example.skeleton.ts",
 		LastModified: time.Date(2024, 6, 5, 12, 0, 0, 0, time.UTC),
 		Status:       types.StatusCurrent,
 		Type:         "service",
@@ -88,7 +88,7 @@ func TestSaveAndLoadIndex(t *testing.T) {
 	entry1 := types.FileEntry{
 		Hash:         "hash1",
 		SkeletonHash: "skeleton1",
-		SkeletonPath: ".code-context/skeletons/src/foo.skeleton.ts",
+		SkeletonPath: ".spine/skeletons/src/foo.skeleton.ts",
 		LastModified: time.Date(2024, 5, 1, 8, 0, 0, 0, time.UTC),
 		Status:       types.StatusStale,
 		Type:         "service",
@@ -97,7 +97,7 @@ func TestSaveAndLoadIndex(t *testing.T) {
 	entry2 := types.FileEntry{
 		Hash:         "hash2",
 		SkeletonHash: "skeleton2",
-		SkeletonPath: ".code-context/skeletons/src/bar.skeleton.ts",
+		SkeletonPath: ".spine/skeletons/src/bar.skeleton.ts",
 		LastModified: time.Date(2024, 5, 1, 8, 10, 0, 0, time.UTC),
 		Status:       types.StatusPendingGeneration,
 		Type:         "controller",

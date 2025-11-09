@@ -44,17 +44,17 @@ func TestWriteJSONAndGitignore(t *testing.T) {
 	}
 
 	gitignore := filepath.Join(dir, ".gitignore")
-	if err := EnsureGitignoreEntry(gitignore, ".code-context/"); err != nil {
+	if err := EnsureGitignoreEntry(gitignore, ".spine/"); err != nil {
 		t.Fatalf("EnsureGitignoreEntry: %v", err)
 	}
-	if err := EnsureGitignoreEntry(gitignore, ".code-context/"); err != nil {
+	if err := EnsureGitignoreEntry(gitignore, ".spine/"); err != nil {
 		t.Fatalf("EnsureGitignoreEntry duplicate: %v", err)
 	}
 	data, err = os.ReadFile(gitignore)
 	if err != nil {
 		t.Fatalf("read gitignore: %v", err)
 	}
-	if string(data) != ".code-context/\n" {
+	if string(data) != ".spine/\n" {
 		t.Fatalf("unexpected gitignore content: %s", string(data))
 	}
 }

@@ -15,10 +15,10 @@ func TestEnsureGitignoreEntry(t *testing.T) {
 		t.Fatalf("failed to seed gitignore: %v", err)
 	}
 
-	if err := EnsureGitignoreEntry(path, ".code-context/"); err != nil {
+	if err := EnsureGitignoreEntry(path, ".spine/"); err != nil {
 		t.Fatalf("EnsureGitignoreEntry error: %v", err)
 	}
-	if err := EnsureGitignoreEntry(path, ".code-context/"); err != nil {
+	if err := EnsureGitignoreEntry(path, ".spine/"); err != nil {
 		t.Fatalf("EnsureGitignoreEntry second call error: %v", err)
 	}
 
@@ -28,7 +28,7 @@ func TestEnsureGitignoreEntry(t *testing.T) {
 	}
 
 	content := string(data)
-	if count := strings.Count(content, ".code-context/"); count != 1 {
-		t.Fatalf("expected .code-context/ entry once, found %d occurrences in %q", count, content)
+	if count := strings.Count(content, ".spine/"); count != 1 {
+		t.Fatalf("expected .spine/ entry once, found %d occurrences in %q", count, content)
 	}
 }

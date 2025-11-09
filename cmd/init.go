@@ -19,7 +19,8 @@ import (
 )
 
 const (
-	ctxDirName         = ".code-context"
+	ctxDirName         = ".spine"
+	legacyCtxDirName   = ".spine"
 	configFileName     = "config.json"
 	indexFileName      = "index.json"
 	skeletonPromptName = skeleton.PromptFileName
@@ -28,8 +29,8 @@ const (
 func newInitCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "init",
-		Short: "Initialize the .code-context/ workspace",
-		Long: `ctx init bootstraps the context workspace by creating .code-context/,
+		Short: "Initialize the .spine/ workspace",
+		Long: `spine init bootstraps the spine workspace by creating .spine/,
 writing default configuration, and preparing an index for all tracked files.`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runInit()
@@ -46,11 +47,24 @@ func runInit() error {
 	}
 
 	ctxDir := filepath.Join(wd, ctxDirName)
+	legacyDir := filepath.Join(wd, legacyCtxDirName)
+
+	// Check for existing .spine directory
 	if fs.Exists(ctxDir) {
 		return &types.Error{
 			Code: types.ExitCodeUserError,
 			Err:  fmt.Errorf("already initialized. Use 'spine rebuild' to reset"),
 		}
+	}
+
+	// Migrate from .spine to .spine if needed
+	if fs.Exists(legacyDir) {
+		fmt.Println(display.Info("Migrating from .spine/ to .spine/..."))
+		if err := os.Rename(legacyDir, ctxDir); err != nil {
+			return &types.Error{Code: types.ExitCodeFileSystem, Err: fmt.Errorf("migrate .spine to .spine: %w", err)}
+		}
+		fmt.Println(display.Success("Migrated to .spine/"))
+		return nil
 	}
 
 	if err := fs.EnsureDir(ctxDir); err != nil {
@@ -77,7 +91,7 @@ func runInit() error {
 		return &types.Error{Code: types.ExitCodeFileSystem, Err: err}
 	}
 
-	fmt.Println(display.Success("Initialized .code-context/"))
+	fmt.Println(display.Success("Initialized .spine/"))
 	fmt.Println(display.Success("Updated .gitignore"))
 	fmt.Println(display.Info("Scanning codebase..."))
 

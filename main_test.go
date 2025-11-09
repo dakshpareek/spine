@@ -25,7 +25,7 @@ func TestInitSyncGenerateFlow(t *testing.T) {
 	runCommand(t, "sync")
 	runCommand(t, "generate", "--output", "prompt.md")
 
-	if _, err := os.Stat(".code-context/index.json"); err != nil {
+	if _, err := os.Stat(".spine/index.json"); err != nil {
 		t.Fatalf("expected index.json to exist: %v", err)
 	}
 
@@ -33,7 +33,7 @@ func TestInitSyncGenerateFlow(t *testing.T) {
 		t.Fatalf("expected prompt.md to be generated: %v", err)
 	}
 
-	loaded, err := index.LoadIndex(filepath.Join(".code-context", "index.json"))
+	loaded, err := index.LoadIndex(filepath.Join(".spine", "index.json"))
 	if err != nil {
 		t.Fatalf("LoadIndex: %v", err)
 	}

@@ -57,7 +57,7 @@ func writeTempFile(t *testing.T, dir, rel, content string) string {
 
 func loadIndex(t *testing.T, dir string) *types.Index {
 	t.Helper()
-	idx, err := indexpkg.LoadIndex(filepath.Join(dir, ".code-context", "index.json"))
+	idx, err := indexpkg.LoadIndex(filepath.Join(dir, ".spine", "index.json"))
 	if err != nil {
 		t.Fatalf("load index: %v", err)
 	}

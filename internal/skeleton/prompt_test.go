@@ -26,11 +26,11 @@ func TestLoadPromptTemplateWorkspaceOverride(t *testing.T) {
 	tempDir := t.TempDir()
 	withWorkingDir(t, tempDir)
 
-	if err := os.MkdirAll(filepath.Join(".code-context"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(".spine"), 0o755); err != nil {
 		t.Fatalf("failed to create workspace dir: %v", err)
 	}
 	expected := "custom workspace prompt"
-	if err := os.WriteFile(filepath.Join(".code-context", PromptFileName), []byte(expected), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(".spine", PromptFileName), []byte(expected), 0o644); err != nil {
 		t.Fatalf("failed to write prompt override: %v", err)
 	}
 
@@ -48,12 +48,12 @@ func TestLoadPromptTemplateRootOverride(t *testing.T) {
 	withWorkingDir(t, tempDir)
 
 	rootPath := filepath.Join(tempDir, "app")
-	if err := os.MkdirAll(filepath.Join(rootPath, ".code-context"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(rootPath, ".spine"), 0o755); err != nil {
 		t.Fatalf("failed to create root workspace: %v", err)
 	}
 
 	expected := "root override prompt"
-	target := filepath.Join(rootPath, ".code-context", PromptFileName)
+	target := filepath.Join(rootPath, ".spine", PromptFileName)
 	if err := os.WriteFile(target, []byte(expected), 0o644); err != nil {
 		t.Fatalf("failed to write root override: %v", err)
 	}

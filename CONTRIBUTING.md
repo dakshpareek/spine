@@ -15,7 +15,7 @@ Thanks for your interest in improving `ctx`! This document explains how to get s
 
 1. Create a feature branch off `main`.
 2. Run `go test ./... -cover` before opening a pull request.
-3. Use `ctx validate --fix --strict` to confirm index integrity if you touch the `.code-context/` workflow.
+3. Use `ctx validate --fix --strict` to confirm index integrity if you touch the `.spine/` workflow.
 
 ## Coding Guidelines
 

@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Go 1.23+](https://img.shields.io/badge/Go-1.23+-00ADD8?logo=go)](https://golang.org)
 
-Maintain an AI-ready snapshot of your codebase. `spine` extracts the structural skeleton of your project into a lightweight `.code-context/` workspace so coding assistants can understand architecture before they touch your source files.
+Maintain an AI-ready snapshot of your codebase. `spine` extracts the structural skeleton of your project into a lightweight `.spine/` workspace so coding assistants can understand architecture before they touch your source files.
 
 ## Installation
 
@@ -89,14 +89,14 @@ rm $HOME/go/bin/spine
 
 ```bash
 cd /path/to/project
-spine init                # bootstrap .code-context and initial index
+spine init                # bootstrap .spine and initial index
 spine generate --output prompt.md
 # or combine the first two steps:
 # spine pipeline --output prompt.md
 ```
 
 1. Paste `prompt.md` into your AI assistant and let it create/update skeletons.
-2. Save the generated skeletons under `.code-context/skeletons/`.
+2. Save the generated skeletons under `.spine/skeletons/`.
 3. Run `spine status` to confirm everything is current.
 
 ## Daily Workflow

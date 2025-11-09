@@ -33,7 +33,7 @@ var (
 		"build",
 		".next",
 		"coverage",
-		".code-context",
+		".spine",
 		".git",
 		"*.test.*",
 		"*.spec.*",

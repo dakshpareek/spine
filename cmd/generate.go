@@ -161,7 +161,7 @@ func buildPromptOutput(paths []string, idx *types.Index, promptTemplate, cwd str
 	builder.WriteString("## Instructions\n\n")
 	builder.WriteString("1. For each file below, generate a skeleton using the provided template.\n")
 	builder.WriteString("2. Create or update skeleton files at the specified paths.\n")
-	builder.WriteString("3. Update `.code-context/index.json` with the new skeleton hash and status.\n\n")
+	builder.WriteString("3. Update `.spine/index.json` with the new skeleton hash and status.\n\n")
 
 	builder.WriteString("## Skeleton Generation Template\n\n")
 	builder.WriteString("```text\n")
@@ -210,12 +210,12 @@ func buildPromptOutput(paths []string, idx *types.Index, promptTemplate, cwd str
 	}
 
 	builder.WriteString("## Index Updates Required\n\n")
-	builder.WriteString("After generating skeletons, update `.code-context/index.json`:\n\n")
+	builder.WriteString("After generating skeletons, update `.spine/index.json`:\n\n")
 	builder.WriteString("1. Write the skeleton file to the specified path.\n")
 	builder.WriteString("2. Calculate the SHA-256 hash of the skeleton content.\n")
 	builder.WriteString("3. Update the file entry with `status: \"current\"`, the new `skeletonHash`, and the current timestamp for `lastModified`.\n")
 	builder.WriteString("4. Recalculate the index stats to reflect the changes.\n\n")
-	builder.WriteString("**Index Path:** .code-context/index.json\n\n")
+	builder.WriteString("**Index Path:** .spine/index.json\n\n")
 
 	builder.WriteString("## Verification\n\n")
 	builder.WriteString("After completion, run `ctx status` to verify that all files are marked current.\n")

@@ -13,10 +13,10 @@
 
 ## Product Overview
 
-Code Context CLI creates and maintains a shadow filesystem (`.code-context/`) that mirrors your codebase structure with compact "skeleton" files. These skeletons capture the essential structure, patterns, and conventions of each file without implementation details. AI agents consume these skeletons to understand your entire architecture before writing code.
+Code Context CLI creates and maintains a shadow filesystem (`.spine/`) that mirrors your codebase structure with compact "skeleton" files. These skeletons capture the essential structure, patterns, and conventions of each file without implementation details. AI agents consume these skeletons to understand your entire architecture before writing code.
 
 ### Key Principles
-- **Zero coupling:** Tool operates in isolated `.code-context/` directory
+- **Zero coupling:** Tool operates in isolated `.spine/` directory
 - **Manual first:** Phase 1 uses AI copy-paste workflow (no API integration)
 - **Git-aware:** Leverages git for efficient change detection
 - **Single source of truth:** One mini-replica serves all features/tasks
@@ -27,7 +27,7 @@ Code Context CLI creates and maintains a shadow filesystem (`.code-context/`) th
 ## Phase 1 Scope
 
 ### In Scope
-✅ Initialize `.code-context/` structure
+✅ Initialize `.spine/` structure
 ✅ Scan codebase and build file index
 ✅ Detect file changes via git diff and hashing
 ✅ Generate AI prompts for skeleton creation (manual copy-paste)
@@ -51,7 +51,7 @@ Code Context CLI creates and maintains a shadow filesystem (`.code-context/`) th
 ### Directory Structure
 ```
 project-root/
-├── .code-context/              # Hidden directory (gitignored by default)
+├── .spine/              # Hidden directory (gitignored by default)
 │   ├── index.json             # Master index with file metadata
 │   ├── config.json            # User configuration
 │   ├── skeleton-prompt.txt    # Default skeleton generation prompt
@@ -59,7 +59,7 @@ project-root/
 │       └── src/
 │           └── booking/
 │               └── booking.service.skeleton.ts
-├── .gitignore                 # Auto-updated to ignore .code-context/
+├── .gitignore                 # Auto-updated to ignore .spine/
 └── src/                       # User's actual codebase
     └── booking/
         └── booking.service.ts
@@ -90,7 +90,7 @@ project-root/
       "path": "src/booking/booking.service.ts",
       "hash": "a3f2e1c9...",
       "skeletonHash": "b7d4a8f2...",
-      "skeletonPath": ".code-context/skeletons/src/booking/booking.service.skeleton.ts",
+      "skeletonPath": ".spine/skeletons/src/booking/booking.service.skeleton.ts",
       "lastModified": "2025-11-04T09:15:00Z",
       "status": "current",
       "type": "service",
@@ -138,24 +138,24 @@ project-root/
 
 ### 1. `spine init`
 
-**Purpose:** Initialize `.code-context/` structure in current directory
+**Purpose:** Initialize `.spine/` structure in current directory
 
 **Behavior:**
-1. Check if `.code-context/` already exists (error if yes)
+1. Check if `.spine/` already exists (error if yes)
 2. Create directory structure:
    ```
-   .code-context/
+   .spine/
    ├── index.json (empty initial state)
    ├── config.json (default config)
    ├── skeleton-prompt.txt (embedded default prompt)
    └── skeletons/ (empty directory)
    ```
-3. Add `.code-context/` to `.gitignore` (create if missing)
+3. Add `.spine/` to `.gitignore` (create if missing)
 4. Run initial scan (same as `spine sync`)
 
 **Output:**
 ```
-✓ Initialized .code-context/
+✓ Initialized .spine/
 ✓ Updated .gitignore
 ✓ Scanning codebase...
   Found 247 files
@@ -168,7 +168,7 @@ Next steps:
 ```
 
 **Error Cases:**
-- `.code-context/` already exists → "Already initialized. Use 'ctx rebuild' to reset."
+- `.spine/` already exists → "Already initialized. Use 'ctx rebuild' to reset."
 - Not in a project root → "Run from project root directory"
 - No write permissions → "Permission denied"
 
@@ -257,7 +257,7 @@ You are generating structural skeletons for a codebase. Follow these instruction
 
 ### File 1: src/booking/booking.service.ts
 **Status:** stale
-**Skeleton Path:** .code-context/skeletons/src/booking/booking.service.skeleton.ts
+**Skeleton Path:** .spine/skeletons/src/booking/booking.service.skeleton.ts
 
 **Source Code:**
 ```typescript
@@ -268,7 +268,7 @@ You are generating structural skeletons for a codebase. Follow these instruction
 
 ### File 2: src/voucher/voucher.repository.ts
 **Status:** missing
-**Skeleton Path:** .code-context/skeletons/src/voucher/voucher.repository.skeleton.ts
+**Skeleton Path:** .spine/skeletons/src/voucher/voucher.repository.skeleton.ts
 
 **Source Code:**
 ```typescript
@@ -279,7 +279,7 @@ You are generating structural skeletons for a codebase. Follow these instruction
 
 ## Index Updates Required
 
-After generating skeletons, update `.code-context/index.json`:
+After generating skeletons, update `.spine/index.json`:
 
 For each file processed:
 1. Create/update the skeleton file at the specified path
@@ -296,7 +296,7 @@ For each file processed:
    - Decrement stale/missing counts
    - Increment current count
 
-**Index Path:** .code-context/index.json
+**Index Path:** .spine/index.json
 
 ## Verification
 
@@ -391,7 +391,7 @@ Run 'ctx generate' to resolve issues.
 **Purpose:** Remove orphaned skeleton files
 
 **Behavior:**
-1. Scan `.code-context/skeletons/` directory
+1. Scan `.spine/skeletons/` directory
 2. Compare with files in `index.json`
 3. Delete skeleton files not referenced in index
 4. Remove empty directories
@@ -730,7 +730,7 @@ ctx rebuild --confirm
 ```
 
 ### User Overrides
-Users can edit `.code-context/config.json` directly. Changes take effect on next `spine sync`.
+Users can edit `.spine/config.json` directly. Changes take effect on next `spine sync`.
 
 ---
 
@@ -836,7 +836,7 @@ After Phase 1 validates the concept:
 
 4. **Team Sync:** Shared context in git
    ```bash
-   ctx push  # Commit .code-context/ to repo
+   ctx push  # Commit .spine/ to repo
    ```
 
 ---
@@ -846,7 +846,7 @@ After Phase 1 validates the concept:
 1. **Prompt Storage:** Embed in binary or require external file?
    - **Decision:** Embed default, allow override via config
 
-2. **Gitignore Behavior:** Always ignore `.code-context/` or make configurable?
+2. **Gitignore Behavior:** Always ignore `.spine/` or make configurable?
    - **Decision:** Default ignore, document how to commit if desired
 
 3. **Binary Name:** `ctx` vs `code-context` vs `skeleton`?
@@ -897,7 +897,7 @@ After Phase 1 validates the concept:
 ```bash
 # Initialize new project
 $ ctx init
-✓ Initialized .code-context/
+✓ Initialized .spine/
 ✓ Scanning codebase...
   Found 247 files (all marked missing)
 
