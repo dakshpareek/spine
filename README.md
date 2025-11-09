@@ -63,6 +63,26 @@ Check your version:
 spine --version
 ```
 
+## Uninstalling
+
+### Pre-built Binary
+
+```bash
+sudo rm /usr/local/bin/spine
+```
+
+### From Source
+
+```bash
+go clean -i github.com/dakshpareek/spine
+```
+
+Or manually remove:
+
+```bash
+rm $HOME/go/bin/spine
+```
+
 ## Quick Start
 
 ```bash
