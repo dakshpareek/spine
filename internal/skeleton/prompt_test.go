@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 func TestLoadPromptTemplateDefault(t *testing.T) {
@@ -26,11 +26,11 @@ func TestLoadPromptTemplateWorkspaceOverride(t *testing.T) {
 	tempDir := t.TempDir()
 	withWorkingDir(t, tempDir)
 
-	if err := os.MkdirAll(filepath.Join(".spine"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(".ctx"), 0o755); err != nil {
 		t.Fatalf("failed to create workspace dir: %v", err)
 	}
 	expected := "custom workspace prompt"
-	if err := os.WriteFile(filepath.Join(".spine", PromptFileName), []byte(expected), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(".ctx", PromptFileName), []byte(expected), 0o644); err != nil {
 		t.Fatalf("failed to write prompt override: %v", err)
 	}
 
@@ -48,12 +48,12 @@ func TestLoadPromptTemplateRootOverride(t *testing.T) {
 	withWorkingDir(t, tempDir)
 
 	rootPath := filepath.Join(tempDir, "app")
-	if err := os.MkdirAll(filepath.Join(rootPath, ".spine"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(rootPath, ".ctx"), 0o755); err != nil {
 		t.Fatalf("failed to create root workspace: %v", err)
 	}
 
 	expected := "root override prompt"
-	target := filepath.Join(rootPath, ".spine", PromptFileName)
+	target := filepath.Join(rootPath, ".ctx", PromptFileName)
 	if err := os.WriteFile(target, []byte(expected), 0o644); err != nil {
 		t.Fatalf("failed to write root override: %v", err)
 	}
@@ -64,6 +64,27 @@ func TestLoadPromptTemplateRootOverride(t *testing.T) {
 	}
 	if prompt != expected {
 		t.Fatalf("expected root override %q, got %q", expected, prompt)
+	}
+}
+
+func TestLoadPromptTemplateLegacyFallback(t *testing.T) {
+	tempDir := t.TempDir()
+	withWorkingDir(t, tempDir)
+
+	if err := os.MkdirAll(filepath.Join(".spine"), 0o755); err != nil {
+		t.Fatalf("failed to create legacy workspace dir: %v", err)
+	}
+	expected := "legacy prompt"
+	if err := os.WriteFile(filepath.Join(".spine", PromptFileName), []byte(expected), 0o644); err != nil {
+		t.Fatalf("failed to write legacy prompt override: %v", err)
+	}
+
+	prompt, err := LoadPromptTemplate(types.Config{})
+	if err != nil {
+		t.Fatalf("LoadPromptTemplate error: %v", err)
+	}
+	if prompt != expected {
+		t.Fatalf("expected legacy prompt %q, got %q", expected, prompt)
 	}
 }
 

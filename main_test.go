@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	rootcmd "github.com/dakshpareek/spine/cmd"
-	"github.com/dakshpareek/spine/internal/index"
+	rootcmd "github.com/dakshpareek/ctx/cmd"
+	"github.com/dakshpareek/ctx/internal/index"
 )
 
 func TestInitSyncGenerateFlow(t *testing.T) {
@@ -25,7 +25,7 @@ func TestInitSyncGenerateFlow(t *testing.T) {
 	runCommand(t, "sync")
 	runCommand(t, "generate", "--output", "prompt.md")
 
-	if _, err := os.Stat(".spine/index.json"); err != nil {
+	if _, err := os.Stat(".ctx/index.json"); err != nil {
 		t.Fatalf("expected index.json to exist: %v", err)
 	}
 
@@ -33,7 +33,7 @@ func TestInitSyncGenerateFlow(t *testing.T) {
 		t.Fatalf("expected prompt.md to be generated: %v", err)
 	}
 
-	loaded, err := index.LoadIndex(filepath.Join(".spine", "index.json"))
+	loaded, err := index.LoadIndex(filepath.Join(".ctx", "index.json"))
 	if err != nil {
 		t.Fatalf("LoadIndex: %v", err)
 	}

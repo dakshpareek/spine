@@ -9,7 +9,7 @@ import (
 
 	"os"
 
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 func TestParseStatusFilter(t *testing.T) {
@@ -96,7 +96,7 @@ func TestBuildPromptOutput(t *testing.T) {
 		Files: map[string]types.FileEntry{
 			"src/example.go": {
 				Path:         "src/example.go",
-				SkeletonPath: ".spine/skeletons/src/example.skeleton.go",
+				SkeletonPath: ".ctx/skeletons/src/example.skeleton.go",
 				Status:       types.StatusStale,
 				Type:         "service",
 			},
@@ -131,7 +131,7 @@ func TestBuildJSONExport(t *testing.T) {
 	skeletons := []exportedSkeleton{
 		{
 			Path:         "src/example.go",
-			SkeletonPath: ".spine/skeletons/src/example.skeleton.go",
+			SkeletonPath: ".ctx/skeletons/src/example.skeleton.go",
 			Type:         "service",
 			Status:       types.StatusCurrent,
 			Content:      "content",

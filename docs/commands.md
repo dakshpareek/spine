@@ -1,18 +1,18 @@
 # Command Reference
 
-`ctx` exposes a collection of commands for managing your `.spine/` workspace. Each command accepts `--help` for detailed usage.
+`ctx` exposes a collection of commands for managing your `.ctx/` workspace. Each command accepts `--help` for detailed usage.
 
-## `spine init`
+## `ctx init`
 
-Initializes `.spine/` in the current directory.
+Initializes `.ctx/` in the current directory.
 
 - Creates `config.json`, `index.json`, and `skeletons/`.
-- Adds `.spine/` to `.gitignore`.
+- Adds `.ctx/` to `.gitignore`.
 - Scans the project and marks files as `missing`.
 
-> Run from your project root. If the workspace already exists, use `spine rebuild --confirm`.
+> Run from your project root. If the workspace already exists, use `ctx rebuild --confirm`.
 
-## `spine sync`
+## `ctx sync`
 
 Scans your project for changes.
 
@@ -27,7 +27,7 @@ Behaviour:
 - New files → `missing`
 - Removed files → deleted from index
 
-## `spine generate`
+## `ctx generate`
 
 Builds a Markdown prompt for an AI assistant to generate skeletons.
 
@@ -42,7 +42,7 @@ Post-conditions:
 - Selected entries are marked as `pendingGeneration`.
 - Prompts include source code, skeleton paths, and index update instructions.
 
-## `spine pipeline`
+## `ctx pipeline`
 
 Runs `sync` and `generate` back-to-back.
 
@@ -50,11 +50,11 @@ Flags:
 
 - `--full` – force a full scan before generating.
 - `--verbose`, `-v` – show detailed sync output.
-- `--filter`, `--files`, `--output` – same as `spine generate`.
+- `--filter`, `--files`, `--output` – same as `ctx generate`.
 
 Use this when you want a single step before copying the prompt to your AI assistant.
 
-## `spine status`
+## `ctx status`
 
 Displays index statistics.
 
@@ -63,7 +63,7 @@ Flags:
 - `--verbose`, `-v` – lists files by status.
 - `--json` – emits machine-readable JSON.
 
-## `spine validate`
+## `ctx validate`
 
 Checks integrity between source files, skeletons, and index metadata.
 
@@ -72,13 +72,13 @@ Flags:
 - `--fix` – automatically mark stale/missing entries and repair hashes.
 - `--strict` – non-zero exit code if issues are detected.
 
-## `spine clean`
+## `ctx clean`
 
-Removes orphaned skeleton files within `.spine/skeletons/` and prunes empty directories.
+Removes orphaned skeleton files within `.ctx/skeletons/` and prunes empty directories.
 
-## `spine rebuild`
+## `ctx rebuild`
 
-Resets the `.spine/` workspace (destructive).
+Resets the `.ctx/` workspace (destructive).
 
 Flags:
 
@@ -90,7 +90,7 @@ Steps:
 2. Resets the index.
 3. Performs a full scan.
 
-## `spine export`
+## `ctx export`
 
 Collects all `current` skeletons into a single artifact.
 

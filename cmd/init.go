@@ -8,18 +8,18 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/dakshpareek/spine/internal/config"
-	"github.com/dakshpareek/spine/internal/display"
-	"github.com/dakshpareek/spine/internal/fs"
-	"github.com/dakshpareek/spine/internal/hash"
-	"github.com/dakshpareek/spine/internal/index"
-	"github.com/dakshpareek/spine/internal/scanner"
-	"github.com/dakshpareek/spine/internal/skeleton"
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/config"
+	"github.com/dakshpareek/ctx/internal/display"
+	"github.com/dakshpareek/ctx/internal/fs"
+	"github.com/dakshpareek/ctx/internal/hash"
+	"github.com/dakshpareek/ctx/internal/index"
+	"github.com/dakshpareek/ctx/internal/scanner"
+	"github.com/dakshpareek/ctx/internal/skeleton"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 const (
-	ctxDirName         = ".spine"
+	ctxDirName         = ".ctx"
 	legacyCtxDirName   = ".spine"
 	configFileName     = "config.json"
 	indexFileName      = "index.json"
@@ -29,8 +29,8 @@ const (
 func newInitCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "init",
-		Short: "Initialize the .spine/ workspace",
-		Long: `spine init bootstraps the spine workspace by creating .spine/,
+		Short: "Initialize the .ctx/ workspace",
+		Long: `ctx init bootstraps the ctx workspace by creating .ctx/,
 writing default configuration, and preparing an index for all tracked files.`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runInit()
@@ -49,21 +49,21 @@ func runInit() error {
 	ctxDir := filepath.Join(wd, ctxDirName)
 	legacyDir := filepath.Join(wd, legacyCtxDirName)
 
-	// Check for existing .spine directory
+	// Check for existing .ctx directory
 	if fs.Exists(ctxDir) {
 		return &types.Error{
 			Code: types.ExitCodeUserError,
-			Err:  fmt.Errorf("already initialized. Use 'spine rebuild' to reset"),
+			Err:  fmt.Errorf("already initialized. Use 'ctx rebuild' to reset"),
 		}
 	}
 
-	// Migrate from .spine to .spine if needed
+	// Migrate from .spine to .ctx if needed
 	if fs.Exists(legacyDir) {
-		fmt.Println(display.Info("Migrating from .spine/ to .spine/..."))
+		fmt.Println(display.Info("Migrating from .spine/ to .ctx/..."))
 		if err := os.Rename(legacyDir, ctxDir); err != nil {
-			return &types.Error{Code: types.ExitCodeFileSystem, Err: fmt.Errorf("migrate .spine to .spine: %w", err)}
+			return &types.Error{Code: types.ExitCodeFileSystem, Err: fmt.Errorf("migrate .spine to .ctx: %w", err)}
 		}
-		fmt.Println(display.Success("Migrated to .spine/"))
+		fmt.Println(display.Success("Migrated to .ctx/"))
 		return nil
 	}
 
@@ -91,7 +91,7 @@ func runInit() error {
 		return &types.Error{Code: types.ExitCodeFileSystem, Err: err}
 	}
 
-	fmt.Println(display.Success("Initialized .spine/"))
+	fmt.Println(display.Success("Initialized .ctx/"))
 	fmt.Println(display.Success("Updated .gitignore"))
 	fmt.Println(display.Info("Scanning codebase..."))
 
@@ -147,9 +147,9 @@ func runInit() error {
 	fmt.Println(display.Success("Index created"))
 	fmt.Println()
 	fmt.Println("Next steps:")
-	fmt.Println("  1. Run 'spine generate' to create skeleton prompts")
+	fmt.Println("  1. Run 'ctx generate' to create skeleton prompts")
 	fmt.Println("  2. Feed prompts to your AI assistant")
-	fmt.Println("  3. Run 'spine status' to check progress")
+	fmt.Println("  3. Run 'ctx status' to check progress")
 
 	return nil
 }

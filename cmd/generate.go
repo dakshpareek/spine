@@ -10,12 +10,12 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/dakshpareek/spine/internal/display"
-	"github.com/dakshpareek/spine/internal/fs"
-	"github.com/dakshpareek/spine/internal/index"
-	"github.com/dakshpareek/spine/internal/scanner"
-	"github.com/dakshpareek/spine/internal/skeleton"
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/display"
+	"github.com/dakshpareek/ctx/internal/fs"
+	"github.com/dakshpareek/ctx/internal/index"
+	"github.com/dakshpareek/ctx/internal/scanner"
+	"github.com/dakshpareek/ctx/internal/skeleton"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 type generateOptions struct {
@@ -52,12 +52,12 @@ func runGenerate(opts generateOptions) error {
 
 	ctxDir := filepath.Join(wd, ctxDirName)
 	if !fs.Exists(ctxDir) {
-		return &types.Error{Code: types.ExitCodeUserError, Err: fmt.Errorf("not initialized. Run 'spine init' first")}
+		return &types.Error{Code: types.ExitCodeUserError, Err: fmt.Errorf("not initialized. Run 'ctx init' first")}
 	}
 
 	indexPath := filepath.Join(ctxDir, indexFileName)
 	if !fs.Exists(indexPath) {
-		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing index.json. Run 'spine sync' to restore")}
+		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing index.json. Run 'ctx sync' to restore")}
 	}
 	idx, err := index.LoadIndex(indexPath)
 	if err != nil {
@@ -147,7 +147,7 @@ func runGenerate(opts generateOptions) error {
 	fmt.Fprintln(os.Stderr, "Next steps:")
 	fmt.Fprintln(os.Stderr, "  1. Create/update skeleton files at the specified paths")
 	fmt.Fprintln(os.Stderr, "  2. Update index.json with new skeleton hashes and statuses")
-	fmt.Fprintln(os.Stderr, "  3. Run 'spine status' to verify progress")
+	fmt.Fprintln(os.Stderr, "  3. Run 'ctx status' to verify progress")
 
 	return nil
 }
@@ -161,7 +161,7 @@ func buildPromptOutput(paths []string, idx *types.Index, promptTemplate, cwd str
 	builder.WriteString("## Instructions\n\n")
 	builder.WriteString("1. For each file below, generate a skeleton using the provided template.\n")
 	builder.WriteString("2. Create or update skeleton files at the specified paths.\n")
-	builder.WriteString("3. Update `.spine/index.json` with the new skeleton hash and status.\n\n")
+	builder.WriteString("3. Update `.ctx/index.json` with the new skeleton hash and status.\n\n")
 
 	builder.WriteString("## Skeleton Generation Template\n\n")
 	builder.WriteString("```text\n")
@@ -210,15 +210,15 @@ func buildPromptOutput(paths []string, idx *types.Index, promptTemplate, cwd str
 	}
 
 	builder.WriteString("## Index Updates Required\n\n")
-	builder.WriteString("After generating skeletons, update `.spine/index.json`:\n\n")
+	builder.WriteString("After generating skeletons, update `.ctx/index.json`:\n\n")
 	builder.WriteString("1. Write the skeleton file to the specified path.\n")
 	builder.WriteString("2. Calculate the SHA-256 hash of the skeleton content.\n")
 	builder.WriteString("3. Update the file entry with `status: \"current\"`, the new `skeletonHash`, and the current timestamp for `lastModified`.\n")
 	builder.WriteString("4. Recalculate the index stats to reflect the changes.\n\n")
-	builder.WriteString("**Index Path:** .spine/index.json\n\n")
+	builder.WriteString("**Index Path:** .ctx/index.json\n\n")
 
 	builder.WriteString("## Verification\n\n")
-	builder.WriteString("After completion, run `spine status` to verify that all files are marked current.\n")
+	builder.WriteString("After completion, run `ctx status` to verify that all files are marked current.\n")
 
 	return builder.String(), nil
 }

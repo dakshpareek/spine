@@ -10,15 +10,15 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/dakshpareek/spine/internal/config"
-	"github.com/dakshpareek/spine/internal/display"
-	"github.com/dakshpareek/spine/internal/fs"
-	"github.com/dakshpareek/spine/internal/git"
-	"github.com/dakshpareek/spine/internal/hash"
-	"github.com/dakshpareek/spine/internal/index"
-	"github.com/dakshpareek/spine/internal/scanner"
-	"github.com/dakshpareek/spine/internal/skeleton"
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/config"
+	"github.com/dakshpareek/ctx/internal/display"
+	"github.com/dakshpareek/ctx/internal/fs"
+	"github.com/dakshpareek/ctx/internal/git"
+	"github.com/dakshpareek/ctx/internal/hash"
+	"github.com/dakshpareek/ctx/internal/index"
+	"github.com/dakshpareek/ctx/internal/scanner"
+	"github.com/dakshpareek/ctx/internal/skeleton"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 type syncOptions struct {
@@ -51,12 +51,12 @@ func runSync(opts syncOptions) error {
 
 	ctxDir := filepath.Join(wd, ctxDirName)
 	if !fs.Exists(ctxDir) {
-		return &types.Error{Code: types.ExitCodeUserError, Err: fmt.Errorf("not initialized. Run 'spine init' first")}
+		return &types.Error{Code: types.ExitCodeUserError, Err: fmt.Errorf("not initialized. Run 'ctx init' first")}
 	}
 
 	configPath := filepath.Join(ctxDir, configFileName)
 	if !fs.Exists(configPath) {
-		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing config.json. Run 'spine rebuild --confirm' to restore")}
+		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing config.json. Run 'ctx rebuild --confirm' to restore")}
 	}
 	cfg, err := config.LoadConfig(configPath)
 	if err != nil {
@@ -65,7 +65,7 @@ func runSync(opts syncOptions) error {
 
 	indexPath := filepath.Join(ctxDir, indexFileName)
 	if !fs.Exists(indexPath) {
-		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing index.json. Run 'spine rebuild --confirm' to restore")}
+		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing index.json. Run 'ctx rebuild --confirm' to restore")}
 	}
 	idx, err := index.LoadIndex(indexPath)
 	if err != nil {

@@ -8,14 +8,14 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/dakshpareek/spine/internal/config"
-	"github.com/dakshpareek/spine/internal/display"
-	"github.com/dakshpareek/spine/internal/fs"
-	"github.com/dakshpareek/spine/internal/hash"
-	"github.com/dakshpareek/spine/internal/index"
-	"github.com/dakshpareek/spine/internal/scanner"
-	"github.com/dakshpareek/spine/internal/skeleton"
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/config"
+	"github.com/dakshpareek/ctx/internal/display"
+	"github.com/dakshpareek/ctx/internal/fs"
+	"github.com/dakshpareek/ctx/internal/hash"
+	"github.com/dakshpareek/ctx/internal/index"
+	"github.com/dakshpareek/ctx/internal/scanner"
+	"github.com/dakshpareek/ctx/internal/skeleton"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 type rebuildOptions struct {
@@ -50,7 +50,7 @@ func runRebuild(opts rebuildOptions) error {
 
 	ctxDir := filepath.Join(wd, ctxDirName)
 	if !fs.Exists(ctxDir) {
-		return &types.Error{Code: types.ExitCodeUserError, Err: fmt.Errorf("not initialized. Run 'spine init' first")}
+		return &types.Error{Code: types.ExitCodeUserError, Err: fmt.Errorf("not initialized. Run 'ctx init' first")}
 	}
 
 	configPath := filepath.Join(ctxDir, configFileName)
@@ -119,7 +119,7 @@ func runRebuild(opts rebuildOptions) error {
 	fmt.Printf("  %s\n", display.Info("Scanning codebase..."))
 	fmt.Printf("Found %d files (all marked missing)\n", len(files))
 	fmt.Println()
-	fmt.Println("Run 'spine generate' to recreate skeletons.")
+	fmt.Println("Run 'ctx generate' to recreate skeletons.")
 
 	return nil
 }

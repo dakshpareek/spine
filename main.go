@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/dakshpareek/spine/cmd"
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/cmd"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 var version = "dev"

@@ -20,3 +20,4 @@ coverage.out
 
 # Project specific
 .code-context/
+.ctx/

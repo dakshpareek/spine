@@ -5,20 +5,20 @@
 ## Daily Maintenance
 
 ```bash
-spine pipeline --output prompt.md
+ctx pipeline --output prompt.md
 # Feed prompt.md to your AI assistant and update skeletons
-spine status
+ctx status
 ```
 
-1. `spine sync` identifies changed files.
-2. `spine pipeline` runs sync and generate together (fallback: run `spine sync` then `spine generate` manually).
-3. After updating skeletons, rerun `spine status` to confirm everything is `current`.
+1. `ctx sync` identifies changed files.
+2. `ctx pipeline` runs sync and generate together (fallback: run `ctx sync` then `ctx generate` manually).
+3. After updating skeletons, rerun `ctx status` to confirm everything is `current`.
 
 ## After Large Refactors
 
 ```bash
-spine sync --full
-spine generate --output refactor-prompts.md
+ctx sync --full
+ctx generate --output refactor-prompts.md
 ```
 
 - The `--full` flag ignores Git history and walks the entire tree.
@@ -32,19 +32,19 @@ ctx export --output context.md
 
 - Run this before pairing with an AI assistant or teammate.
 - `context.md` includes index stats and every `current` skeleton.
-- Use `spine export --format json` for automation or custom tooling.
+- Use `ctx export --format json` for automation or custom tooling.
 
 ## Recovering from Drastic Changes
 
-If `.spine/` gets out of sync with reality:
+If `.ctx/` gets out of sync with reality:
 
 ```bash
 ctx rebuild --confirm
-spine generate --output fresh-prompts.md
+ctx generate --output fresh-prompts.md
 ```
 
-- `spine rebuild` wipes skeletons and rebuilds the index.
-- Follow up with `spine generate` to recreate everything from scratch.
+- `ctx rebuild` wipes skeletons and rebuilds the index.
+- Follow up with `ctx generate` to recreate everything from scratch.
 
 ## Validation Sweep
 
@@ -59,7 +59,7 @@ ctx validate --fix --strict
 
 Once you wire up CI:
 
-- Run `go test ./...` and `spine validate --strict` on pull requests.
+- Run `go test ./...` and `ctx validate --strict` on pull requests.
 - Publish exports or prompt bundles on demand.
 
 Use the documentation in `.github/workflows/` (once added) as a template for your automation.

@@ -2,12 +2,12 @@ package cmd
 
 import "github.com/spf13/cobra"
 
-// NewRootCmd constructs the base CLI command for spine.
+// NewRootCmd constructs the base CLI command for ctx.
 func NewRootCmd(version string) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "spine",
+		Use:   "ctx",
 		Short: "Extract and maintain your codebase's architecture",
-		Long: `Spine helps you maintain a lightweight, up-to-date architectural 
+		Long: `ctx helps you maintain a lightweight, up-to-date architectural 
 snapshot of your project for AI-assisted development.`,
 		SilenceUsage:  true,
 		SilenceErrors: true,

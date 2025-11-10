@@ -10,7 +10,7 @@ Welcome to `ctx`, the Code Context CLI. Follow this guide to bootstrap a new pro
 ## Installation
 
 ```bash
-go install github.com/yourusername/spine@latest
+go install github.com/yourusername/ctx@latest
 ```
 
 This places the `ctx` binary in your `$GOBIN` (`$GOPATH/bin` by default).
@@ -19,19 +19,19 @@ This places the `ctx` binary in your `$GOBIN` (`$GOPATH/bin` by default).
 
 ```bash
 cd /path/to/project
-spine init
+ctx init
 ```
 
 The command:
 
-1. Creates `.spine/`, `config.json`, `index.json`, and `skeletons/`.
-2. Adds `.spine/` to `.gitignore`.
+1. Creates `.ctx/`, `config.json`, `index.json`, and `skeletons/`.
+2. Adds `.ctx/` to `.gitignore`.
 3. Scans your project for trackable files and marks them as `missing`.
 
 ## Sync Daily Changes
 
 ```bash
-spine sync
+ctx sync
 ```
 
 `ctx` compares tracked files with your working tree:
@@ -43,7 +43,7 @@ spine sync
 ## Generate Skeleton Prompts
 
 ```bash
-spine generate --filter stale,missing --output prompt.md
+ctx generate --filter stale,missing --output prompt.md
 ```
 
 Share `prompt.md` with your AI assistant. It contains:
@@ -56,13 +56,13 @@ Share `prompt.md` with your AI assistant. It contains:
 
 After the AI writes skeletons:
 
-1. Save each skeleton to the path under `.spine/skeletons/…`.
-2. Update `.spine/index.json` with the new `skeletonHash`, `status: "current"`, and timestamp (or run `spine sync` with `--full`).
+1. Save each skeleton to the path under `.ctx/skeletons/…`.
+2. Update `.ctx/index.json` with the new `skeletonHash`, `status: "current"`, and timestamp (or run `ctx sync` with `--full`).
 
 ## Verify Status
 
 ```bash
-spine status --verbose
+ctx status --verbose
 ```
 
 You’ll see a summary plus detailed lists of `stale`, `missing`, and `pendingGeneration` files.

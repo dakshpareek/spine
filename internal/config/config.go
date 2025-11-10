@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 const (
@@ -33,7 +33,7 @@ var (
 		"build",
 		".next",
 		"coverage",
-		".spine",
+		".ctx",
 		".git",
 		"*.test.*",
 		"*.spec.*",

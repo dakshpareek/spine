@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	indexpkg "github.com/dakshpareek/spine/internal/index"
-	"github.com/dakshpareek/spine/internal/types"
+	indexpkg "github.com/dakshpareek/ctx/internal/index"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 func changeDir(t *testing.T, dir string) func() {
@@ -57,7 +57,7 @@ func writeTempFile(t *testing.T, dir, rel, content string) string {
 
 func loadIndex(t *testing.T, dir string) *types.Index {
 	t.Helper()
-	idx, err := indexpkg.LoadIndex(filepath.Join(dir, ".spine", "index.json"))
+	idx, err := indexpkg.LoadIndex(filepath.Join(dir, ".ctx", "index.json"))
 	if err != nil {
 		t.Fatalf("load index: %v", err)
 	}

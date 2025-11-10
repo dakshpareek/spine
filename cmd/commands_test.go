@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 func TestValidateStatusExportCleanRebuild(t *testing.T) {
@@ -49,7 +49,7 @@ func TestValidateStatusExportCleanRebuild(t *testing.T) {
 		t.Fatalf("expected export to contain skeleton content")
 	}
 
-	orphan := filepath.Join(dir, ".spine", "skeletons", "orphan.txt")
+	orphan := filepath.Join(dir, ".ctx", "skeletons", "orphan.txt")
 	if err := os.WriteFile(orphan, []byte("orphan"), 0o644); err != nil {
 		t.Fatalf("write orphan: %v", err)
 	}

@@ -10,10 +10,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/dakshpareek/spine/internal/display"
-	"github.com/dakshpareek/spine/internal/fs"
-	"github.com/dakshpareek/spine/internal/index"
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/display"
+	"github.com/dakshpareek/ctx/internal/fs"
+	"github.com/dakshpareek/ctx/internal/index"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 type statusOptions struct {
@@ -46,12 +46,12 @@ func runStatus(opts statusOptions) error {
 
 	ctxDir := filepath.Join(wd, ctxDirName)
 	if !fs.Exists(ctxDir) {
-		return &types.Error{Code: types.ExitCodeUserError, Err: fmt.Errorf("not initialized. Run 'spine init' first")}
+		return &types.Error{Code: types.ExitCodeUserError, Err: fmt.Errorf("not initialized. Run 'ctx init' first")}
 	}
 
 	indexPath := filepath.Join(ctxDir, indexFileName)
 	if !fs.Exists(indexPath) {
-		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing index.json. Run 'spine sync' to rebuild")}
+		return &types.Error{Code: types.ExitCodeData, Err: fmt.Errorf("missing index.json. Run 'ctx sync' to rebuild")}
 	}
 
 	idx, err := index.LoadIndex(indexPath)

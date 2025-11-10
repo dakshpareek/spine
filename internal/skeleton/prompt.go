@@ -6,13 +6,13 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 import _ "embed"
 
 const (
-	// PromptFileName is the filename used within .spine for the prompt template.
+	// PromptFileName is the filename used within .ctx for the prompt template.
 	PromptFileName = "skeleton-prompt.txt"
 )
 
@@ -26,11 +26,11 @@ func DefaultPrompt() string {
 
 // LoadPromptTemplate loads the skeleton prompt template, allowing user overrides.
 // Preference order:
-//  1. Config-specific override at <RootPath>/.spine/skeleton-prompt.txt
-//  2. Workspace default at .spine/skeleton-prompt.txt
+//  1. Config-specific override at <RootPath>/.ctx/skeleton-prompt.txt
+//  2. Workspace default at .ctx/skeleton-prompt.txt
 //  3. Embedded default prompt
 func LoadPromptTemplate(cfg types.Config) (string, error) {
-	baseDir := filepath.Dir(DirRoot) // .spine
+	baseDir := filepath.Dir(DirRoot) // .ctx
 
 	candidates := []string{
 		filepath.Clean(filepath.Join(baseDir, PromptFileName)),
@@ -38,6 +38,12 @@ func LoadPromptTemplate(cfg types.Config) (string, error) {
 
 	if root := cfg.RootPath; root != "" && root != "." {
 		candidates = append([]string{filepath.Clean(filepath.Join(root, baseDir, PromptFileName))}, candidates...)
+	}
+
+	// Legacy fallback for pre-rename workspaces.
+	candidates = append(candidates, filepath.Clean(filepath.Join(".spine", PromptFileName)))
+	if root := cfg.RootPath; root != "" && root != "." {
+		candidates = append(candidates, filepath.Clean(filepath.Join(root, ".spine", PromptFileName)))
 	}
 
 	for _, candidate := range uniqueStrings(candidates) {

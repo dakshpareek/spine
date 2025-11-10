@@ -7,7 +7,7 @@ import (
 
 const (
 	// DirRoot is the root directory used to store skeleton files.
-	DirRoot = ".spine/skeletons"
+	DirRoot = ".ctx/skeletons"
 )
 
 // PathForSource returns the relative skeleton path corresponding to a source file path.

@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-**Product Name:** Spine (`spine`)
+**Product Name:** ctx (`ctx`)
 **Version:** 1.0.0 (Phase 1 - Manual Mode)
 **Language:** Go
 **Target Users:** Developers using AI coding assistants (ChatGPT, Claude, etc.)
@@ -13,10 +13,10 @@
 
 ## Product Overview
 
-Code Context CLI creates and maintains a shadow filesystem (`.spine/`) that mirrors your codebase structure with compact "skeleton" files. These skeletons capture the essential structure, patterns, and conventions of each file without implementation details. AI agents consume these skeletons to understand your entire architecture before writing code.
+Code Context CLI creates and maintains a shadow filesystem (`.ctx/`) that mirrors your codebase structure with compact "skeleton" files. These skeletons capture the essential structure, patterns, and conventions of each file without implementation details. AI agents consume these skeletons to understand your entire architecture before writing code.
 
 ### Key Principles
-- **Zero coupling:** Tool operates in isolated `.spine/` directory
+- **Zero coupling:** Tool operates in isolated `.ctx/` directory
 - **Manual first:** Phase 1 uses AI copy-paste workflow (no API integration)
 - **Git-aware:** Leverages git for efficient change detection
 - **Single source of truth:** One mini-replica serves all features/tasks
@@ -27,7 +27,7 @@ Code Context CLI creates and maintains a shadow filesystem (`.spine/`) that mirr
 ## Phase 1 Scope
 
 ### In Scope
-✅ Initialize `.spine/` structure
+✅ Initialize `.ctx/` structure
 ✅ Scan codebase and build file index
 ✅ Detect file changes via git diff and hashing
 ✅ Generate AI prompts for skeleton creation (manual copy-paste)
@@ -51,7 +51,7 @@ Code Context CLI creates and maintains a shadow filesystem (`.spine/`) that mirr
 ### Directory Structure
 ```
 project-root/
-├── .spine/              # Hidden directory (gitignored by default)
+├── .ctx/              # Hidden directory (gitignored by default)
 │   ├── index.json             # Master index with file metadata
 │   ├── config.json            # User configuration
 │   ├── skeleton-prompt.txt    # Default skeleton generation prompt
@@ -59,7 +59,7 @@ project-root/
 │       └── src/
 │           └── booking/
 │               └── booking.service.skeleton.ts
-├── .gitignore                 # Auto-updated to ignore .spine/
+├── .gitignore                 # Auto-updated to ignore .ctx/
 └── src/                       # User's actual codebase
     └── booking/
         └── booking.service.ts
@@ -90,7 +90,7 @@ project-root/
       "path": "src/booking/booking.service.ts",
       "hash": "a3f2e1c9...",
       "skeletonHash": "b7d4a8f2...",
-      "skeletonPath": ".spine/skeletons/src/booking/booking.service.skeleton.ts",
+      "skeletonPath": ".ctx/skeletons/src/booking/booking.service.skeleton.ts",
       "lastModified": "2025-11-04T09:15:00Z",
       "status": "current",
       "type": "service",
@@ -136,45 +136,45 @@ project-root/
 
 ## Command Specifications
 
-### 1. `spine init`
+### 1. `ctx init`
 
-**Purpose:** Initialize `.spine/` structure in current directory
+**Purpose:** Initialize `.ctx/` structure in current directory
 
 **Behavior:**
-1. Check if `.spine/` already exists (error if yes)
+1. Check if `.ctx/` already exists (error if yes)
 2. Create directory structure:
    ```
-   .spine/
+   .ctx/
    ├── index.json (empty initial state)
    ├── config.json (default config)
    ├── skeleton-prompt.txt (embedded default prompt)
    └── skeletons/ (empty directory)
    ```
-3. Add `.spine/` to `.gitignore` (create if missing)
-4. Run initial scan (same as `spine sync`)
+3. Add `.ctx/` to `.gitignore` (create if missing)
+4. Run initial scan (same as `ctx sync`)
 
 **Output:**
 ```
-✓ Initialized .spine/
+✓ Initialized .ctx/
 ✓ Updated .gitignore
 ✓ Scanning codebase...
   Found 247 files
 ✓ Index created
 
 Next steps:
-  1. Run 'spine generate' to create skeleton prompts
+  1. Run 'ctx generate' to create skeleton prompts
   2. Feed prompts to your AI assistant
-  3. Run 'spine status' to check progress
+  3. Run 'ctx status' to check progress
 ```
 
 **Error Cases:**
-- `.spine/` already exists → "Already initialized. Use 'spine rebuild' to reset."
+- `.ctx/` already exists → "Already initialized. Use 'ctx rebuild' to reset."
 - Not in a project root → "Run from project root directory"
 - No write permissions → "Permission denied"
 
 ---
 
-### 2. `spine sync`
+### 2. `ctx sync`
 
 **Purpose:** Scan codebase for changes and update index
 
@@ -213,12 +213,12 @@ Status:
   ⚠ 3 stale
   ⚠ 2 missing
 
-Run 'spine generate' to create skeleton prompts.
+Run 'ctx generate' to create skeleton prompts.
 ```
 
 ---
 
-### 3. `spine generate`
+### 3. `ctx generate`
 
 **Purpose:** Generate AI prompts for skeleton creation (manual mode)
 
@@ -257,7 +257,7 @@ You are generating structural skeletons for a codebase. Follow these instruction
 
 ### File 1: src/booking/booking.service.ts
 **Status:** stale
-**Skeleton Path:** .spine/skeletons/src/booking/booking.service.skeleton.ts
+**Skeleton Path:** .ctx/skeletons/src/booking/booking.service.skeleton.ts
 
 **Source Code:**
 ```typescript
@@ -268,7 +268,7 @@ You are generating structural skeletons for a codebase. Follow these instruction
 
 ### File 2: src/voucher/voucher.repository.ts
 **Status:** missing
-**Skeleton Path:** .spine/skeletons/src/voucher/voucher.repository.skeleton.ts
+**Skeleton Path:** .ctx/skeletons/src/voucher/voucher.repository.skeleton.ts
 
 **Source Code:**
 ```typescript
@@ -279,7 +279,7 @@ You are generating structural skeletons for a codebase. Follow these instruction
 
 ## Index Updates Required
 
-After generating skeletons, update `.spine/index.json`:
+After generating skeletons, update `.ctx/index.json`:
 
 For each file processed:
 1. Create/update the skeleton file at the specified path
@@ -296,11 +296,11 @@ For each file processed:
    - Decrement stale/missing counts
    - Increment current count
 
-**Index Path:** .spine/index.json
+**Index Path:** .ctx/index.json
 
 ## Verification
 
-After completion, the user will run `spine status` to verify all files are current.
+After completion, the user will run `ctx status` to verify all files are current.
 ```
 
 **Post-Generation:**
@@ -309,7 +309,7 @@ After completion, the user will run `spine status` to verify all files are curre
 
 ---
 
-### 4. `spine status`
+### 4. `ctx status`
 
 **Purpose:** Display current state of code context
 
@@ -338,7 +338,7 @@ Last sync: 2 minutes ago
 Skeleton prompt: v2.1
 
 Next steps:
-  Run 'spine generate' to create skeletons for stale files.
+  Run 'ctx generate' to create skeletons for stale files.
 ```
 
 **Verbose Output:**
@@ -350,7 +350,7 @@ Stale files:
 
 ---
 
-### 5. `spine validate`
+### 5. `ctx validate`
 
 **Purpose:** Verify integrity of skeletons and index
 
@@ -381,17 +381,17 @@ Summary:
   2 files marked stale
   1 file removed from index
 
-Run 'spine generate' to resolve issues.
+Run 'ctx generate' to resolve issues.
 ```
 
 ---
 
-### 6. `spine clean`
+### 6. `ctx clean`
 
 **Purpose:** Remove orphaned skeleton files
 
 **Behavior:**
-1. Scan `.spine/skeletons/` directory
+1. Scan `.ctx/skeletons/` directory
 2. Compare with files in `index.json`
 3. Delete skeleton files not referenced in index
 4. Remove empty directories
@@ -406,7 +406,7 @@ Cleaning orphaned skeletons...
 
 ---
 
-### 7. `spine rebuild`
+### 7. `ctx rebuild`
 
 **Purpose:** Reset and regenerate entire context
 
@@ -432,12 +432,12 @@ Rebuilding...
 
 Found 247 files (all marked missing)
 
-Run 'spine generate' to recreate skeletons.
+Run 'ctx generate' to recreate skeletons.
 ```
 
 ---
 
-### 8. `spine export`
+### 8. `ctx export`
 
 **Purpose:** Export context for AI consumption
 
@@ -638,29 +638,29 @@ func scanFiles(config Config) ([]string, error) {
 ```bash
 # Day 1: Initialize
 cd my-project/
-spine init
+ctx init
 
 # Output: Found 247 files, all marked missing
 
-spine generate > skeleton-prompt.txt
+ctx generate > skeleton-prompt.txt
 # Copy skeleton-prompt.txt to Claude/ChatGPT
 # AI generates skeletons and updates index
 
-spine status
+ctx status
 # Output: 247/247 current ✓
 ```
 
 ### Daily Usage
 ```bash
 # Morning: Sync changes
-spine sync
+ctx sync
 # Output: 3 stale, 1 new file
 
-spine generate > prompt.txt
+ctx generate > prompt.txt
 # Feed to AI, AI handles skeleton + index update
 
 # Start coding with full context
-spine export > context.md
+ctx export > context.md
 # Feed context.md to AI when writing new code
 ```
 
@@ -682,7 +682,7 @@ ctx rebuild --confirm
 
 ### Error Categories
 1. **User Errors** (exit code 1)
-   - Not initialized (`spine sync` before `spine init`)
+   - Not initialized (`ctx sync` before `ctx init`)
    - Invalid config
    - Missing required flags
 
@@ -700,9 +700,9 @@ ctx rebuild --confirm
    - Invalid JSON format
 
 ### Error Messages
-- Always actionable: "Run 'spine init' to initialize"
+- Always actionable: "Run 'ctx init' to initialize"
 - Include context: "Failed to read src/booking/service.ts: permission denied"
-- Suggest fixes: "Index is corrupted. Run 'spine rebuild --confirm' to reset."
+- Suggest fixes: "Index is corrupted. Run 'ctx rebuild --confirm' to reset."
 
 ---
 
@@ -730,7 +730,7 @@ ctx rebuild --confirm
 ```
 
 ### User Overrides
-Users can edit `.spine/config.json` directly. Changes take effect on next `spine sync`.
+Users can edit `.ctx/config.json` directly. Changes take effect on next `ctx sync`.
 
 ---
 
@@ -771,7 +771,7 @@ go install github.com/yourusername/code-context@latest
 # Download binary
 curl -L https://github.com/.../releases/latest/download/ctx-linux-amd64 -o ctx
 chmod +x ctx
-sudo mv spine /usr/local/bin/
+sudo mv ctx /usr/local/bin/
 ```
 
 ### Releases
@@ -821,22 +821,22 @@ After Phase 1 validates the concept:
 
 1. **Auto Mode:** Direct AI API integration
    ```bash
-   spine generate --auto --provider=openai
+   ctx generate --auto --provider=openai
    ```
 
 2. **Watch Mode:** Real-time skeleton updates
    ```bash
-   spine watch
+   ctx watch
    ```
 
 3. **Smart Context:** Dependency-aware exports
    ```bash
-   spine export --related-to=booking.service.ts
+   ctx export --related-to=booking.service.ts
    ```
 
 4. **Team Sync:** Shared context in git
    ```bash
-   spine push  # Commit .spine/ to repo
+   ctx push  # Commit .ctx/ to repo
    ```
 
 ---
@@ -846,7 +846,7 @@ After Phase 1 validates the concept:
 1. **Prompt Storage:** Embed in binary or require external file?
    - **Decision:** Embed default, allow override via config
 
-2. **Gitignore Behavior:** Always ignore `.spine/` or make configurable?
+2. **Gitignore Behavior:** Always ignore `.ctx/` or make configurable?
    - **Decision:** Default ignore, document how to commit if desired
 
 3. **Binary Name:** `ctx` vs `code-context` vs `skeleton`?
@@ -896,15 +896,15 @@ After Phase 1 validates the concept:
 
 ```bash
 # Initialize new project
-$ spine init
-✓ Initialized .spine/
+$ ctx init
+✓ Initialized .ctx/
 ✓ Scanning codebase...
   Found 247 files (all marked missing)
 
-Run 'spine generate' to create skeleton prompts.
+Run 'ctx generate' to create skeleton prompts.
 
 # Generate prompts for AI
-$ spine generate > prompt.txt
+$ ctx generate > prompt.txt
 ✓ Generated prompts for 247 files
 ✓ Marked as pending generation
 
@@ -914,7 +914,7 @@ Feed prompt.txt to your AI assistant.
 # [Claude generates skeletons and updates index]
 
 # Verify completion
-$ spine status
+$ ctx status
 Code Context Status
 
 Overview:
@@ -927,7 +927,7 @@ Skeleton prompt: v2.1
 ✓ All skeletons up to date!
 
 # Daily workflow: detect changes
-$ spine sync
+$ ctx sync
 Scanning codebase...
 ✓ 247 files scanned
 
@@ -939,10 +939,10 @@ Status:
   ✓ 243 current
   ⚠ 4 need regeneration
 
-Run 'spine generate' to update skeletons.
+Run 'ctx generate' to update skeletons.
 
 # Export context for coding session
-$ spine export --output=context.md
+$ ctx export --output=context.md
 ✓ Exported 247 skeletons to context.md
 
 # [User feeds context.md to AI while coding]

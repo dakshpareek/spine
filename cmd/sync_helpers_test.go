@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dakshpareek/spine/internal/types"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 func TestDetermineUpdateSetForceFull(t *testing.T) {
@@ -75,6 +75,9 @@ func TestDetermineUpdateSetGit(t *testing.T) {
 	}
 
 	files := []string{"tracked.go", "untracked.go"}
+	cleanup := changeDir(t, dir)
+	defer cleanup()
+
 	set := determineUpdateSet(files, false, time.Now(), dir, types.Config{RootPath: "."})
 	if len(set) != 2 {
 		t.Fatalf("expected both files included, got %v", set)

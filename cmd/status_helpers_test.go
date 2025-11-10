@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	indexpkg "github.com/dakshpareek/spine/internal/index"
-	"github.com/dakshpareek/spine/internal/types"
+	indexpkg "github.com/dakshpareek/ctx/internal/index"
+	"github.com/dakshpareek/ctx/internal/types"
 )
 
 func TestStatusVerboseOutput(t *testing.T) {
@@ -31,7 +31,7 @@ func TestStatusVerboseOutput(t *testing.T) {
 		Status: types.StatusPendingGeneration,
 	}
 	idx.LastSync = time.Now().Add(-2 * time.Hour)
-	if err := indexpkg.SaveIndex(idx, filepath.Join(dir, ".spine", "index.json")); err != nil {
+	if err := indexpkg.SaveIndex(idx, filepath.Join(dir, ".ctx", "index.json")); err != nil {
 		t.Fatalf("save index: %v", err)
 	}
 
@@ -97,7 +97,7 @@ func TestRunStatusErrors(t *testing.T) {
 		t.Fatalf("expected error when not initialized")
 	}
 
-	// Create .spine but no index to trigger missing index path.
+	// Create .ctx but no index to trigger missing index path.
 	if err := os.MkdirAll(filepath.Join(dir, ctxDirName), 0o755); err != nil {
 		t.Fatalf("mkdir: %v", err)
 	}
